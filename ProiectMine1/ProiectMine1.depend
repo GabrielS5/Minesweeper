@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1481998453 source:c:\users\to\desktop\programare\proiectmine1\main.cpp
-	<iostream>
-	<string>
-	<cstdlib>
-	<ctime>
-
