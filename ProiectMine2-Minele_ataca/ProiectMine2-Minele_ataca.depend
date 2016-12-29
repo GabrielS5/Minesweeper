@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1481897979 source:c:\users\to\desktop\programare\proiectmine2-minele_ataca\main.cpp
-	<iostream>
-	<string>
-	<cstdlib>
-	<ctime>
-
