@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1481998273 source:c:\users\to\desktop\programare\proiectmine4-joc_continuu\main.cpp
-	<iostream>
-	<string>
-	<cstdlib>
-	<ctime>
-
