@@ -7,7 +7,8 @@
 using namespace std;
 
 struct MineSweeper{
-int coloaneLinii;
+int coloane;
+int linii;
 int numarMine;
 int terenMinat[40][40];
 int alegeriJucator[40][40];
@@ -21,9 +22,9 @@ for(int j=0;j<n;j++)
 
 }
 
-void initializareMatrice(int matrice[40][40],int coloaneLinii,int elementAles)
-{for(int i=0;i<coloaneLinii;i++)
-for(int j=0;j<coloaneLinii;j++)
+void initializareMatrice(int matrice[40][40],int coloane,int elementAles)
+{for(int i=0;i<coloane;i++)
+for(int j=0;j<coloane;j++)
     matrice[i][j]=elementAles;
 
 }
@@ -38,15 +39,15 @@ return 1;
 void plantareMine(MineSweeper &Mine)
 {int coordonataX,coordonataY,mine=Mine.numarMine;
 while(Mine.numarMine>0)
-{coordonataX=rand()%Mine.coloaneLinii;
-coordonataY=rand()%Mine.coloaneLinii;
+{coordonataX=rand()%Mine.coloane;
+coordonataY=rand()%Mine.coloane;
 if(!contineMina(Mine,coordonataX,coordonataY))
 {Mine.terenMinat[coordonataY][coordonataX]=-1;
 Mine.numarMine--;}}
 Mine.numarMine=mine;}
 
 bool verificarePlasareMina(MineSweeper &Mine,int y,int x)
-{if(x>=Mine.coloaneLinii || y>=Mine.coloaneLinii || x<0 || y<0)
+{if(x>=Mine.coloane || y>=Mine.coloane || x<0 || y<0)
 return 0;
 if(Mine.terenMinat[y][x]==-1)
     return 0;
@@ -54,15 +55,15 @@ return 1;
 
 }
 bool verificareNedepasireMatrice(int y,int x,MineSweeper &Mine)
-{if(x>=Mine.coloaneLinii || y>=Mine.coloaneLinii || x<0 || y<0)
+{if(x>=Mine.coloane || y>=Mine.coloane || x<0 || y<0)
 return 0;
 return 1;
 }
 
 void activareMine(MineSweeper &Mine)
 {int x,y;
-for(y=0;y<Mine.coloaneLinii;y++)
-for(x=0;x<Mine.coloaneLinii;x++)
+for(y=0;y<Mine.coloane;y++)
+for(x=0;x<Mine.coloane;x++)
 {if(Mine.terenMinat[y][x]==-1)
 {if(verificarePlasareMina(Mine,y,x+1))
 Mine.terenMinat[y][x+1]++;
@@ -85,8 +86,8 @@ Mine.terenMinat[y+1][x-1]++;}
 }
 void initializareInterfata(MineSweeper &Mine)
 {
-    for(int i=0;i<Mine.coloaneLinii;i++)
-for(int j=0;j<Mine.coloaneLinii;j++)
+    for(int i=0;i<Mine.coloane;i++)
+for(int j=0;j<Mine.coloane;j++)
     Mine.interfata[i][j]='N';
 
 }
@@ -117,8 +118,8 @@ if(Mine.terenMinat[y][x]==0 && Mine.alegeriJucator[y][x]==0)
           }}
 
 void incarcareInterfata(MineSweeper &Mine)
-{for(int i=0;i<Mine.coloaneLinii;i++)
-for(int j=0;j<Mine.coloaneLinii;j++)
+{for(int i=0;i<Mine.coloane;i++)
+for(int j=0;j<Mine.coloane;j++)
 {if(Mine.alegeriJucator[i][j]==0)
 Mine.interfata[i][j]='N';
 else
@@ -136,8 +137,8 @@ Mine.interfata[i][j]=Mine.terenMinat[i][j]+48;
 
 int updateGrafica(MineSweeper &Mine,sf::RectangleShape rectangle[40][40],sf::Texture texturi[20])
 {int i,j,poInaltime=0,poLatime=0,laturapatrat=30;
-    for(i=0;i<Mine.coloaneLinii;i++)
-    {for(j=0;j<Mine.coloaneLinii;j++)
+    for(i=0;i<Mine.coloane;i++)
+    {for(j=0;j<Mine.coloane;j++)
 {rectangle[i][j].setSize(sf::Vector2f(laturapatrat, laturapatrat));
 rectangle[i][j].setOutlineColor(sf::Color::Black);
 rectangle[i][j].setOutlineThickness(-2);
@@ -174,8 +175,8 @@ return laturapatrat;
 
 int verificareVictorie(MineSweeper &Mine)
 {int spatiiPosibile=0;
-    for(int i=0;i<Mine.coloaneLinii;i++)
-for(int j=0;j<Mine.coloaneLinii;j++)
+    for(int i=0;i<Mine.coloane;i++)
+for(int j=0;j<Mine.coloane;j++)
     if(Mine.interfata[i][j]=='N' || Mine.interfata[i][j]=='F')
     spatiiPosibile++;
 if(spatiiPosibile==Mine.numarMine)
@@ -193,11 +194,11 @@ Mine.alegeriJucator[y][x]=1;
 void minesweeper(MineSweeper &Mine,sf::RectangleShape rectangle[40][40],sf::Texture texturi[20])
 {int marime,minaLovita=0,x,y,actiune,victorie=0, coloana=0,tastaApasata=0,linia=0;
 marime=updateGrafica(Mine,rectangle,texturi);
-sf::RenderWindow win(sf::VideoMode(marime*Mine.coloaneLinii,marime*Mine.coloaneLinii), "Minesweeper");
+sf::RenderWindow win(sf::VideoMode(marime*Mine.coloane,marime*Mine.coloane), "Minesweeper");
             while (win.isOpen())
     {win.clear();
-        for(int i=0;i<Mine.coloaneLinii;i++)
-        for(int j=0;j<Mine.coloaneLinii;j++)
+        for(int i=0;i<Mine.coloane;i++)
+        for(int j=0;j<Mine.coloane;j++)
         win.draw(rectangle[i][j]);
         if(victorie || minaLovita)
             win.draw(rectangle[39][39]);
@@ -257,10 +258,10 @@ rectangle[39][39].setSize(sf::Vector2f(150, 75));
 rectangle[39][39].setFillColor (sf::Color::White);
      rectangle[39][39].setTexture(&texturi[17]);
 rectangle[39][39].setTextureRect(sf::IntRect(0, 0, 500, 250));
-rectangle[39][39].setPosition(marime*Mine.coloaneLinii/2-75,marime*Mine.coloaneLinii/2-37);
+rectangle[39][39].setPosition(marime*Mine.coloane/2-75,marime*Mine.coloane/2-37);
 rectangle[39][39].setOutlineColor(sf::Color::Red);
 rectangle[39][39].setOutlineThickness(-2);
- initializareMatrice(Mine.alegeriJucator,Mine.coloaneLinii,1);}
+ initializareMatrice(Mine.alegeriJucator,Mine.coloane,1);}
  else
 if(tastaApasata==2)
 {if(Mine.alegeriJucator[linia][coloana]==0)
@@ -274,10 +275,10 @@ rectangle[39][39].setSize(sf::Vector2f(150, 75));
 rectangle[39][39].setFillColor (sf::Color::White);
      rectangle[39][39].setTexture(&texturi[16]);
 rectangle[39][39].setTextureRect(sf::IntRect(0, 0, 500, 250));
-rectangle[39][39].setPosition(marime*Mine.coloaneLinii/2-75,marime*Mine.coloaneLinii/2-37);
+rectangle[39][39].setPosition(marime*Mine.coloane/2-75,marime*Mine.coloane/2-37);
 rectangle[39][39].setOutlineColor(sf::Color::Red);
 rectangle[39][39].setOutlineThickness(-2);
-initializareMatrice(Mine.alegeriJucator,Mine.coloaneLinii,1);
+initializareMatrice(Mine.alegeriJucator,Mine.coloane,1);
 }
 
 updateGrafica(Mine,rectangle,texturi);
@@ -286,33 +287,30 @@ tastaApasata=0;
 }}
 
 void meniuJocSFML(MineSweeper &Mine,sf::Texture texturi[20])
-{int latime=650,urmator=0,numar=-1,inaltime=300,patrate=4,tastaApasata=0,coloana,linia,terminat=0,tastatura=0;
-   Mine.coloaneLinii=0;
-   Mine.numarMine=0;
+{int latime=650,urmator=0,numar=-1,inaltime=300,nrPatrate=4,tastaApasata=0,coloana,linia,terminat=0,tastatura=0;
     sf::RenderWindow win(sf::VideoMode(latime, inaltime), "Meniu");
-sf::RectangleShape rectangle[5];
+sf::RectangleShape celuleMeniu[5];
 for(int i=0;i<4;i++)
-{rectangle[i].setSize(sf::Vector2f(100, 50));
-rectangle[i].setFillColor (sf::Color::White);
- rectangle[i].setTexture(&texturi[i+10]);
-rectangle[i].setTextureRect(sf::IntRect(0, 0, 500, 250));
-rectangle[i].setPosition(50+150*i,100);}
+{celuleMeniu[i].setSize(sf::Vector2f(100, 50));
+celuleMeniu[i].setFillColor (sf::Color::White);
+ celuleMeniu[i].setTexture(&texturi[i+10]);
+celuleMeniu[i].setTextureRect(sf::IntRect(0, 0, 500, 250));
+celuleMeniu[i].setPosition(50+150*i,100);}
 
-            while (win.isOpen())
-    {win.clear();
-    for(int i=0;i<patrate;i++)
-        win.draw(rectangle[i]);
-        win.display();
-        sf::Event eveniment;
-        if(terminat || urmator>1)
-            win.close();
-        while (win.pollEvent(eveniment))
-        {
-            if (eveniment.type == sf::Event::Closed )
-            {win.close();}
-            if(tastatura)
-            {if (eveniment.type == sf::Event::KeyPressed)
-{   if (eveniment.key.code == sf::Keyboard::Numpad1)
+while (win.isOpen())
+{win.clear();
+for(int i=0;i<nrPatrate;i++)
+win.draw(celuleMeniu[i]);
+win.display();
+sf::Event eveniment;
+  if(terminat || urmator>2)
+    win.close();
+    while (win.pollEvent(eveniment))
+    {if (eveniment.type == sf::Event::Closed )
+       win.close();
+     if(tastatura)
+       {if (eveniment.type == sf::Event::KeyPressed)
+   {if (eveniment.key.code == sf::Keyboard::Numpad1)
     numar=1;
     if (eveniment.key.code == sf::Keyboard::Numpad2)
     numar=2;
@@ -332,58 +330,53 @@ rectangle[i].setPosition(50+150*i,100);}
     numar=9;
     if (eveniment.key.code == sf::Keyboard::Numpad0)
     numar=0;
-    if (eveniment.key.code == sf::Keyboard::E)
+    if (eveniment.key.code == sf::Keyboard::Return)
     {urmator++;
-    rectangle[0].setFillColor (sf::Color::White);
- rectangle[0].setTexture(&texturi[15]);
-rectangle[0].setTextureRect(sf::IntRect(0, 0, 500, 250));}}}
-           if (eveniment.type == sf::Event::MouseButtonPressed && tastatura==0)
-{if (eveniment.mouseButton.button == sf::Mouse::Left)
-    {coloana=eveniment.mouseButton.x;
-    linia=eveniment.mouseButton.y;
-    tastaApasata=1;
-    }}}
-    if(numar>-1)
-    {if(urmator==0)
-    {Mine.coloaneLinii=Mine.coloaneLinii*10+numar;
-     numar=-1;}
-     else if(urmator==1)
-     {Mine.numarMine=Mine.numarMine*10+numar;
-     numar=-1;
-     }}
+        celuleMeniu[0].setFillColor (sf::Color::White);
+        celuleMeniu[0].setTexture(&texturi[14+urmator]);
+        celuleMeniu[0].setTextureRect(sf::IntRect(0, 0, 500, 250));}
+}}
+    if (eveniment.type == sf::Event::MouseButtonPressed && tastatura==0)
+              {if (eveniment.mouseButton.button == sf::Mouse::Left)
+               {coloana=eveniment.mouseButton.x;
+                linia=eveniment.mouseButton.y;
+                tastaApasata=1;
+                }}}
+    if(numar>=0)
+      {if(urmator==0)
+        {Mine.coloane=Mine.coloane*10+numar;
+         numar=-1;}
+        else if(urmator==1)
+        {Mine.linii=Mine.linii*10+numar;
+         numar=-1;}
+         else if(urmator==2)
+        {Mine.numarMine=Mine.numarMine*10+numar;
+         numar=-1;}}
     if(tastaApasata)
-    {
-    if(linia>100 && linia<150)
-    {if(coloana>50 && coloana<150)
-    {Mine.numarMine=10;
-Mine.coloaneLinii=9;
-        terminat=1;
-    }
-    if(coloana>200 && coloana<300)
-    {Mine.numarMine=40;
-Mine.coloaneLinii=16;
-        terminat=1;
-    }
-        if(coloana>350 && coloana<450)
-        {Mine.numarMine=99;
-Mine.coloaneLinii=22;
-            terminat=1;
-        }
-        if(coloana>500 && coloana<600)
-        {patrate=1;
-        rectangle[0].setFillColor (sf::Color::White);
- rectangle[0].setTexture(&texturi[14]);
-rectangle[0].setTextureRect(sf::IntRect(0, 0, 500, 250));
-tastatura=1;
-
-
-        }   }
+    {  if(linia>100 && linia<150)
+         {if(coloana>50 && coloana<150)
+           {Mine.numarMine=10;
+            Mine.coloane=9;
+            Mine.linii=9;
+            terminat=1;}
+          if(coloana>200 && coloana<300)
+            {Mine.numarMine=40;
+             Mine.coloane=16;
+             Mine.linii=16;
+             terminat=1;}
+          if(coloana>350 && coloana<450)
+             {Mine.numarMine=99;
+              Mine.coloane=22;
+              Mine.linii=22;
+              terminat=1;}
+          if(coloana>500 && coloana<600)
+             {nrPatrate=1;
+             celuleMeniu[0].setFillColor (sf::Color::White);
+             celuleMeniu[0].setTexture(&texturi[14]);
+             celuleMeniu[0].setTextureRect(sf::IntRect(0, 0, 500, 250));
+             tastatura=1;}}
         tastaApasata=0;
-    }
-    }
-
-
-}
+    }}}
 
 
 void incarcareTexturi(sf::Texture texturi[20])
@@ -416,9 +409,9 @@ sf::Texture texturi[20];
 srand(time(NULL));
 incarcareTexturi(texturi);
 meniuJocSFML(Mine,texturi);
-initializareMatrice(Mine.alegeriJucator,Mine.coloaneLinii,0);
-initializareMatrice(Mine.terenMinat,Mine.coloaneLinii,0);
-initializareInterfata(Mine.interfata,Mine.coloaneLinii,'N');
+initializareMatrice(Mine.alegeriJucator,Mine.coloane,0);
+initializareMatrice(Mine.terenMinat,Mine.coloane,0);
+initializareInterfata(Mine.interfata,Mine.coloane,'N');
 plantareMine(Mine);
 activareMine(Mine);
 minesweeper(Mine,rectangle,texturi);
