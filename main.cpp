@@ -80,18 +80,6 @@ for(int j=0;j<coloaneLinii;j++)
     interfata[i][j]='G';
 
 }
-void afisareInterfata(char interfata[20][20],int coloaneLinii)
-{
-    for(int i=0;i<coloaneLinii;i++)
-{cout<<endl<<i+1<<'|';
-    for(int j=0;j<coloaneLinii;j++)
-{if(interfata[i][j]=='G')
-cout<<"  ";
-
-}
-cout<<"|";
-}
-}
 
 void creareConsecinteAlegere(int terenMinat[20][20],int alegeriJucator[20][20],int y,int x,int coloaneLinii)
 {if(terenMinat[y][x]>0)
@@ -115,29 +103,52 @@ if(terenMinat[y][x]==0 && alegeriJucator[y][x]==0)
         if(terenMinat[y][x-1]>=0 && verificareNedepasireMatrice(y,x-1,coloaneLinii))
           creareConsecinteAlegere(terenMinat,alegeriJucator,y,x-1,coloaneLinii);}}
 
+void afisareInterfata(int terenMinat[20][20],int alegeriJucator[20][20],int coloaneLinii)
+{for(int i=-2;i<coloaneLinii+1;i++)
+{if(i>=0 && i<coloaneLinii)
+    cout<<endl<<i+1<<'|';
+    else
+        cout<<endl<<"  ";
+    for(int j=0;j<coloaneLinii;j++)
+{if(i==-2)
+cout<<j+1<<" ";
+else
+    if(i==-1)
+cout<<"--";
+else
+    if(i==coloaneLinii)
+    cout<<"--";
+else
+{if(alegeriJucator[i][j]==0)
+cout<<"  ";
+else
+{if(terenMinat[i][j]==0)
+cout<<"- ";
+else
+cout<<terenMinat[i][j]<<" ";
+}}}
+if(i>=0 && i<coloaneLinii)
+cout<<"|";
+}
+}
 
-void minesweeper(int terenMinat[20][20],int alegeriJucator[20][20],char interfata[20][20],int coloaneLinii)
+void minesweeper(int terenMinat[20][20],int alegeriJucator[20][20],int coloaneLinii)
 {int minaLovita=0,x,y;
-
+afisareInterfata( terenMinat, alegeriJucator, coloaneLinii);
 while(minaLovita==0)
-{cout<<"Alege Coloana ";
+{cout<<endl<<"Alege Coloana ";
 cin>>y;
 cout<<endl<<"Alege Linia ";
 cin>>x;
-if(terenMinat[y][x]==-1)
+if(terenMinat[y-1][x-1]==-1)
 {minaLovita=1;
  cout<<"BOOOOOOOOOOOOOOOM";
 }
 else
-{creareConsecinteAlegere(terenMinat,alegeriJucator,y,x,coloaneLinii);
-afisare(terenMinat,9);
-afisare(alegeriJucator,9);
+{creareConsecinteAlegere(terenMinat,alegeriJucator,y-1,x-1,coloaneLinii);
+afisareInterfata( terenMinat, alegeriJucator, coloaneLinii);
 
-}
-
-
-
-}
+}}
 
 }
 
@@ -150,8 +161,7 @@ initializareMatrice(alegeriJucator,9);
 initializareMatrice(terenMinat,9);
 plantareMine(terenMinat,10,9);
 activareMine(terenMinat,9);
-afisare(terenMinat,9);
-minesweeper(terenMinat, alegeriJucator, interfata, 9);
+minesweeper(terenMinat, alegeriJucator, 9);
 
 
 
