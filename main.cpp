@@ -43,6 +43,11 @@ if(terenMinat[y][x]==-1)
 return 1;
 
 }
+bool verificareNedepasireMatrice(int y,int x,int coloaneLinii)
+{if(x>=coloaneLinii || y>=coloaneLinii || x<0 || y<0)
+return 0;
+return 1;
+}
 
 void activareMine(int terenMinat[20][20],int coloaneLinii)
 {int x,y;
@@ -68,18 +73,67 @@ terenMinat[y+1][x-1]++;}
 }
 
 }
+void initializareInterfata(char interfata[20][20],int coloaneLinii)
+{
+    for(int i=0;i<coloaneLinii;i++)
+for(int j=0;j<coloaneLinii;j++)
+    interfata[i][j]='G';
+
+}
+void afisareInterfata(char interfata[20][20],int coloaneLinii)
+{
+    for(int i=0;i<coloaneLinii;i++)
+{cout<<endl<<i+1<<'|';
+    for(int j=0;j<coloaneLinii;j++)
+{if(interfata[i][j]=='G')
+cout<<"  ";
+
+}
+cout<<"|";
+}
+}
+
+void creareConsecinteAlegere(int terenMinat[20][20],int alegeriJucator[20][20],int y,int x,int coloaneLinii)
+{if(terenMinat[y][x]>0)
+    alegeriJucator[y][x]=1;
+if(terenMinat[y][x]==0 && alegeriJucator[y][x]==0)
+       {alegeriJucator[y][x]=1;
+        if(terenMinat[y+1][x+1]>=0 && verificareNedepasireMatrice(y+1,x+1,coloaneLinii))
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y+1,x+1,coloaneLinii);
+        if(terenMinat[y-1][x+1]>=0 && verificareNedepasireMatrice(y-1,x+1,coloaneLinii))
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y-1,x+1,coloaneLinii);
+        if(terenMinat[y+1][x-1]>=0 && verificareNedepasireMatrice(y+1,x-1,coloaneLinii))
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y+1,x-1,coloaneLinii);
+        if(terenMinat[y-1][x-1]>=0 && verificareNedepasireMatrice(y-1,x-1,coloaneLinii))
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y-1,x-1,coloaneLinii);
+        if(terenMinat[y+1][x]>=0 && verificareNedepasireMatrice(y+1,x,coloaneLinii))
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y+1,x,coloaneLinii);
+        if(terenMinat[y-1][x]>=0 && verificareNedepasireMatrice(y-1,x,coloaneLinii))
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y-1,x,coloaneLinii);
+        if(terenMinat[y][x+1]>=0 && verificareNedepasireMatrice(y,x+1,coloaneLinii))
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y,x+1,coloaneLinii);
+        if(terenMinat[y][x-1]>=0 && verificareNedepasireMatrice(y,x-1,coloaneLinii))
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y,x-1,coloaneLinii);}
 
 
-
+}
 
 
 int main()
 {srand(time(NULL));
-int terenMinat[20][20];
-initializareMatrice(terenMinat,10);
+int terenMinat[20][20],alegeriJucator[20][20];
+char interfata[20][20];
+initializareMatrice(alegeriJucator,9);
+initializareMatrice(terenMinat,9);
 plantareMine(terenMinat,10,9);
-afisare(terenMinat,9);
 activareMine(terenMinat,9);
 afisare(terenMinat,9);
+int y,x;
+cin>>y>>x;
+creareConsecinteAlegere(terenMinat,alegeriJucator,y,x,9);
+afisare(alegeriJucator,9);
+
+
+
 
 }
