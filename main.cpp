@@ -113,8 +113,31 @@ if(terenMinat[y][x]==0 && alegeriJucator[y][x]==0)
         if(terenMinat[y][x+1]>=0 && verificareNedepasireMatrice(y,x+1,coloaneLinii))
           creareConsecinteAlegere(terenMinat,alegeriJucator,y,x+1,coloaneLinii);
         if(terenMinat[y][x-1]>=0 && verificareNedepasireMatrice(y,x-1,coloaneLinii))
-          creareConsecinteAlegere(terenMinat,alegeriJucator,y,x-1,coloaneLinii);}
+          creareConsecinteAlegere(terenMinat,alegeriJucator,y,x-1,coloaneLinii);}}
 
+
+void minesweeper(int terenMinat[20][20],int alegeriJucator[20][20],char interfata[20][20],int coloaneLinii)
+{int minaLovita=0,x,y;
+
+while(minaLovita==0)
+{cout<<"Alege Coloana ";
+cin>>y;
+cout<<endl<<"Alege Linia ";
+cin>>x;
+if(terenMinat[y][x]==-1)
+{minaLovita=1;
+ cout<<"BOOOOOOOOOOOOOOOM";
+}
+else
+{creareConsecinteAlegere(terenMinat,alegeriJucator,y,x,coloaneLinii);
+afisare(terenMinat,9);
+afisare(alegeriJucator,9);
+
+}
+
+
+
+}
 
 }
 
@@ -128,10 +151,7 @@ initializareMatrice(terenMinat,9);
 plantareMine(terenMinat,10,9);
 activareMine(terenMinat,9);
 afisare(terenMinat,9);
-int y,x;
-cin>>y>>x;
-creareConsecinteAlegere(terenMinat,alegeriJucator,y,x,9);
-afisare(alegeriJucator,9);
+minesweeper(terenMinat, alegeriJucator, interfata, 9);
 
 
 
