@@ -505,7 +505,9 @@ int main()
 citireDinFisier(scoruri);
 MineSweeper Mine;
 Mine.scorJucator=0;
+cout<<"Introdu numele jucatorului ";
 cin.get(Mine.numeJucator,24);
+cout<<endl<<endl;
 sf::RectangleShape celulaTablou[40][40];
 sf::Texture texturi[21];
 srand(time(NULL));

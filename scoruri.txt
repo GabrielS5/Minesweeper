@@ -2,12 +2,12 @@
 22 Cristi 
 27 Galan
 29 Gabi
+33 Ion
 44 Nico
 45 Simon
 46 Vlad
 55 Gabrote
 62 Rebeca
-77 Vasile
 120 Andrei
 166 Adi
 210 Cosmin
